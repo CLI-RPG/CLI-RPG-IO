@@ -9,6 +9,8 @@ services:
       - 20000:27017
     env_file:
       db.env
+    networks:
+      - cli-rpg-io-mongo
 
   mongo-express:
     image: mongo-express
@@ -17,3 +19,8 @@ services:
       - 8081:8081
     env_file:
       db.env
+    networks:
+      - cli-rpg-io-mongo
+
+networks:
+  cli-rpg-io-mongo:

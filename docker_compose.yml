@@ -32,6 +32,15 @@ services:
     build: ./io_service
     env_file:
       ./io_service/io_service.env
+
+  bl_service:
+    image: bl_service
+    ports:
+      - 5002:5000
+    restart: always
+    build: ../CLI-RPG-Business-Logic
+    env_file:
+      ../CLI-RPG-Business-Logic/bl_server.env
      
 
 networks:

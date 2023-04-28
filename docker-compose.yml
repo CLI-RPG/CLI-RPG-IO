@@ -2,7 +2,7 @@ version: '3.1'
 
 services:
 
-  mongo:
+  mongo-io:
     image: mongo
     restart: always
     ports:
@@ -12,7 +12,7 @@ services:
     # networks:
     #   - cli-rpg-io-mongo
 
-  mongo-express:
+  mongo-express-io:
     image: mongo-express
     restart: always
     ports:
@@ -32,7 +32,7 @@ services:
     build: ./io_service
     env_file:
       ./io_service/io_service.env
-     
+
 
 networks:
   cli-rpg-io-mongo:

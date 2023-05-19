@@ -27,24 +27,26 @@ print("Authenthication server connected to database! :)")
 @app.route("/save_session", methods=["POST"])
 def create():
     data = request.json
-    userId = data.get('userId')
+    userID = data.get('userID')
     health = data.get('health')
     attackPwr = data.get('attackPwr')
     shield = data.get('shield')
     level = data.get('level')
     gameMap = data.get('map')
     money = data.get("money")
-    scenarioId = data.get('scenarioId')
+    scenarioID = data.get('scenarioID')
+    currentEnemyHP = data.get('currentEnemyHP')
 
     session = {
-        "userId": userId,
+        "userID": userID,
         "health" : health,
         "attackPwr" : attackPwr,
         "shield" : shield,
         "level" : level,
         "money" : money,
         "map" : gameMap,
-        "scenarioId" : scenarioId
+        "scenarioID" : scenarioID,
+        "currentEnemyHP" : currentEnemyHP
     }
     result = collection.insert_one(session)
     return Response(status=200, response=json.dumps(result.inserted_id.__str__()))
@@ -52,24 +54,26 @@ def create():
 @app.route("/save_session/<session_id>", methods=["PUT"])
 def update(session_id):
     data = request.json
-    userId = data.get('userId')
+    userID = data.get('userID')
     health = data.get('health')
     attackPwr = data.get('attackPwr')
     shield = data.get('shield')
     level = data.get('level')
     gameMap = data.get('map')
     money = data.get("money")
-    scenarioId = data.get('scenarioId')
+    scenarioID = data.get('scenarioID')
+    currentEnemyHP = data.get('currentEnemyHP')
 
     session = {
-        "userId": userId,
+        "userID": userID,
         "health" : health,
         "attackPwr" : attackPwr,
         "shield" : shield,
         "level" : level,
         "money" : money,
         "map" : gameMap,
-        "scenarioId" : scenarioId
+        "scenarioID" : scenarioID,
+        "currentEnemyHP" : currentEnemyHP
     }
     result = collection.update_one({"_id" : ObjectId(session_id)}, { "$set" : session})
     if result.matched_count == 0:
@@ -85,14 +89,15 @@ def get(session_id):
         return Response(status=404)
     else:
         session = {
-            "userId": result["userId"],
+            "userID": result["userID"],
             "health" : result["health"],
             "attackPwr" : result["attackPwr"],
             "shield" : result["shield"],
             "level" : result["level"],
             "money" : result["money"],
             "map" : result["map"],
-            "scenarioId" : result["scenarioId"],
+            "scenarioID" : result["scenarioID"],
+            "currentEnemyHP" : result["currentEnemyHP"]
         }
         return Response(status=200, response=json.dumps(session))
 

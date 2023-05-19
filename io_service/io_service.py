@@ -19,8 +19,6 @@ client = MongoClient('mongodb://mongo_bl:27017/',
 db = client[DATABASE]
 collection = db[COLLECTION]
 
-collection.estimated_document_count()
-
 print("Authenthication server connected to database! :)")
 
 
@@ -51,7 +49,7 @@ def create():
     result = collection.insert_one(session)
     return Response(status=200, response=json.dumps(result.inserted_id.__str__()))
 
-@app.route("/save_session/<session_id>", methods=["PUT"])
+@app.route("/session/<session_id>", methods=["PUT"])
 def update(session_id):
     data = request.json
     userID = data.get('userID')
@@ -81,7 +79,7 @@ def update(session_id):
     return Response(status=200)
 
 
-@app.route("/get_session/<session_id>", methods=["GET"])
+@app.route("/session/<session_id>", methods=["GET"])
 def get(session_id):
     result = collection.find_one(ObjectId(session_id))
 

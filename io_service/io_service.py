@@ -34,6 +34,8 @@ def create():
     money = data.get("money")
     scenarioID = data.get('scenarioID')
     currentEnemyHP = data.get('currentEnemyHP')
+    name = data.get('name')
+    blockTurns = data.get("blockTurnsRemaining")
 
     session = {
         "userID": userID,
@@ -44,7 +46,9 @@ def create():
         "money" : money,
         "map" : gameMap,
         "scenarioID" : scenarioID,
-        "currentEnemyHP" : currentEnemyHP
+        "currentEnemyHP" : currentEnemyHP,
+        "name" : name,
+        "blockTurnsRemaining" : blockTurns
     }
 
     print(session, flush=True)
@@ -65,6 +69,7 @@ def update(session_id):
     money = data.get("money")
     scenarioID = data.get('scenarioID')
     currentEnemyHP = data.get('currentEnemyHP')
+    blockTurns = data.get("blockTurnsRemaining")
 
     session = {
         "name": name,
@@ -76,7 +81,8 @@ def update(session_id):
         "money" : money,
         "map" : gameMap,
         "scenarioID" : scenarioID,
-        "currentEnemyHP" : currentEnemyHP
+        "currentEnemyHP" : currentEnemyHP,
+        "blockTurnsRemaining" : blockTurns
     }
     result = collection.update_one({"_id" : ObjectId(session_id)}, { "$set" : session})
     if result.matched_count == 0:
@@ -101,7 +107,8 @@ def get(session_id):
             "money" : result["money"],
             "map" : result["map"],
             "scenarioID" : result["scenarioID"],
-            "currentEnemyHP" : result["currentEnemyHP"]
+            "currentEnemyHP" : result["currentEnemyHP"],
+            "blockTurnsRemaining" : result["blockTurnsRemaining"]
         }
         return Response(status=200, response=json.dumps(session))
 

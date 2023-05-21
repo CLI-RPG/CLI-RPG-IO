@@ -112,11 +112,19 @@ def get(session_id):
         }
         return Response(status=200, response=json.dumps(session))
 
+@app.route("/session/<session_id>", methods=["DELETE"])
+def delete(session_id):
+    result = collection.delete_one({"_id":ObjectId(session_id)})
+    print(result, flush=True)
+    if result.deleted_count == 0:
+        return Response(status=404)
+    return Response(status=200)
+
 @app.route("/<uid>/sessions", methods=["GET"])
 def list(uid):
     result = collection.find({"userID" : uid})
 
-    return Response(status=200, response=json.dumps([{s["_id"].__str__() : s["name"]} for s in result]))
+    return Response(status=200, response=json.dumps([{"value" : s["_id"].__str__(), "label" : s["name"]} for s in result]))
 
 
 if __name__ == '__main__':
